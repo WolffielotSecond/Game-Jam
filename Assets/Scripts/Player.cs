@@ -16,7 +16,7 @@ public class Player : MonoBehaviour
     [SerializeField] private RectTransform _lifeBar;
     [SerializeField] private RectTransform _colddownBar;
     [SerializeField] private RectTransform _warningBar;
-    [SerializeField] private TMP_Text _lifeText;
+    [SerializeField] private TMP_Text _lifeText;//ÑªÁ¿ÎÄ±¾
     [SerializeField] private TMP_Text _speedText;
     [SerializeField] private GameObject _evacIndi;
     [SerializeField] private TMP_Text _evacText;

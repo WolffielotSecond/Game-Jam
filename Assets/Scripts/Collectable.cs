@@ -2,14 +2,23 @@ using UnityEngine;
 
 public class Collectable : MonoBehaviour
 {
+    private enum ItemType//物品类型
+    {
+        Med_Pack, //回血x1，多一个使用按键可以回血，回完消耗
+        Treasure,//主要卖钱的
+        Tear_Gas,//催泪弹，强制眨眼
+        Accelerator//加速，短时间(1秒)速度上限提升到eg5.0, 用完消耗
+    }
     [SerializeField] private GameObject _edge;
     [SerializeField] private GameObject _player;
     [SerializeField] private GameObject _pickupSystem;
     [SerializeField] private Sprite _icon;
     [Space]
+    [Header("Item属性")]
     [SerializeField] private string _itemName;
     [SerializeField] private int _weight;
     [SerializeField] private int _value;
+    [SerializeField] private ItemType _itemType;
     [Space]
     [SerializeField] private bool _isPicked;
     [Space]
