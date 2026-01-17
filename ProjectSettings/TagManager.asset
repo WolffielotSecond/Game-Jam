@@ -12,6 +12,7 @@ TagManager:
   - Evac
   - SoundSystem
   - PickupSystem
+  - Slower
   layers:
   - Default
   - TransparentFX

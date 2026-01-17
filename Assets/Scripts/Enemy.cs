@@ -4,14 +4,30 @@ using UnityEngine.AI;
 public class Enemy : MonoBehaviour
 {
     [SerializeField] private float _moveSpeed;
+    [SerializeField] private float _slowedMoveSpeed;
     [SerializeField] private NavMeshAgent agent;
     [SerializeField] private GameObject player;
     private float _colddown;
     private void Start()
     {
+        player = GameObject.FindGameObjectWithTag("Player");
         agent.updateRotation = false;
         agent.updateUpAxis = false;
         agent.speed = _moveSpeed;
+    }
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        if(collision.gameObject.CompareTag("Slower"))
+        {
+            agent.speed = _slowedMoveSpeed;
+        }
+    }
+    private void OnTriggerExit2D(Collider2D collision)
+    {
+        if (collision.gameObject.CompareTag("Slower"))
+        {
+            agent.speed = _moveSpeed;
+        }
     }
     private void Update()
     {
