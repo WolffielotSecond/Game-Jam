@@ -3,6 +3,7 @@ using TMPro;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.AI;
+using UnityEngine.SocialPlatforms.Impl;
 struct CollectableData
 {
     public string itemName;
@@ -33,6 +34,8 @@ public class Player : MonoBehaviour
     public float _reachRange;
     public float _evacTime;
     public float _maxSessionTime;
+    public int _backpackCapacity;
+    public int _backpackSlots;
 
     private int _moveSpeed = 40;
     private float max = 150;
@@ -52,7 +55,8 @@ public class Player : MonoBehaviour
     [SerializeField] private List<GameObject> _enemys;
     [SerializeField] private List<GameObject> _collectables;
     [Space]
-    [SerializeField] private List<GameObject> _Backback;
+    public List<GameObject> _Backback;
+    public int _backpackScore;
     void Start()
     {
         _sessionTime = _maxSessionTime;
@@ -74,6 +78,7 @@ public class Player : MonoBehaviour
     }
     void Update()
     {
+        //玩家移动速度调节
         float judge = Input.GetAxis("Mouse ScrollWheel");
         {     if (judge > 0f)
             {
@@ -93,10 +98,12 @@ public class Player : MonoBehaviour
             _moveSpeed = 40;
         }
         _speedText.text = "Max Speed: " + _moveSpeed / 10f ;
+        //玩家移动
         float x = Input.GetAxis("Horizontal");
         float y = Input.GetAxis("Vertical");
         float xspeed = x * _moveSpeed / 10f;
         float yspeed = y * _moveSpeed / 10f;
+        //限制最大速度
         float magnitude = (float)System.Math.Sqrt(xspeed * xspeed + yspeed * yspeed);
         if (magnitude > _moveSpeed / 10f)
         {
@@ -106,6 +113,7 @@ public class Player : MonoBehaviour
         magnitude = (float)System.Math.Sqrt(xspeed * xspeed + yspeed * yspeed);
         _soundSystem.transform.localScale = new Vector3(magnitude * _soundMultiplier, magnitude * _soundMultiplier, magnitude * _soundMultiplier);
         _rb.velocity = new Vector2(xspeed, yspeed);
+        //倒计时与状态更新
         _warningLevel -= Time.deltaTime;
         _cooldown -= Time.deltaTime;
         _damageCooldown -= Time.deltaTime;
@@ -120,6 +128,7 @@ public class Player : MonoBehaviour
         {
             _currentEvacTime = _evacTime;
         }
+        //眨眼切换
         if (Input.GetKeyDown(KeyCode.Space))
         {
             if(isDay)
@@ -131,7 +140,8 @@ public class Player : MonoBehaviour
                 SwichtoDay();
             }
         }
-        if(_warningLevel <= 0)
+        //UI更新
+        if (_warningLevel <= 0)
         {
             _warningLevel = 0;
         }
@@ -172,7 +182,8 @@ public class Player : MonoBehaviour
                 SwichtoDay();
             }
         }
-        if(life <= 0 || _sessionTime <= 0)
+        //游戏结束判定
+        if (life <= 0 || _sessionTime <= 0)
         {
             UnityEngine.SceneManagement.SceneManager.LoadScene("GameOver");
             PlayerPrefs.SetInt("LifeLeft", life);
