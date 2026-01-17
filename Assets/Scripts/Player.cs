@@ -148,9 +148,13 @@ public class Player : MonoBehaviour
         {
             _warningLevel = 0;
         }
-        if (_warningLevel>= _maxWarningLevel)
+        else if(_warningLevel>= _maxWarningLevel + 1)
         {
-            if(_chasePositionSeted == false)
+            _warningLevel = _maxWarningLevel + 1;
+        }
+        else if (_warningLevel >= _maxWarningLevel)
+        {
+            if (_chasePositionSeted == false)
             {
                 _chasePositionSeted = true;
                 _chasePosition = transform.position;
@@ -161,6 +165,7 @@ public class Player : MonoBehaviour
             }
             SetLifeBar(1f);
         }
+
         else
         {
             SetLifeBar(_warningLevel / _maxWarningLevel);
