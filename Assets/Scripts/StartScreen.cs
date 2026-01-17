@@ -1,10 +1,3 @@
-#region Info
-// **********************************************************************
-// StartScreen.cs by Fulm1na
-// 		Elite-Staffel
-// **********************************************************************
-#endregion
-
 using UnityEngine;
 
 public class StartScreen : MonoBehaviour

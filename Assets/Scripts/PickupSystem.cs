@@ -67,6 +67,7 @@ public class PickupSystem : MonoBehaviour
             pickedItem.GetComponent<Collectable>().Picked();
             pickedItem.SetActive(false);
             GameObject gameObject = Instantiate(_backpackPrefab);
+            pickedItem.GetComponent<Collectable>().SetBackpackUI(gameObject);
             gameObject.transform.SetParent(_backpackUI.transform, false);
             BackpackText backpackText = gameObject.GetComponent<BackpackText>();
             backpackText.itemName = pickedItem.GetComponent<Collectable>().GetName();

@@ -21,6 +21,8 @@ public class Player : MonoBehaviour
     [SerializeField] private GameObject _evacIndi;
     [SerializeField] private TMP_Text _evacText;
     [SerializeField] private TMP_Text _timeText;
+    [SerializeField] private TMP_Text _accelratorText;
+    [SerializeField] private TMP_Text _medpackText;
     [SerializeField] private GameObject _soundSystem;
     [SerializeField] private GameObject _reachSystem;
     [SerializeField] private GameObject _evacZone;
@@ -34,6 +36,9 @@ public class Player : MonoBehaviour
     public float _maxSessionTime;
     public int _backpackCapacity;
     public int _backpackSlots;
+    public float _accelratorDuration;
+    public float _accelratorSpeed;
+    public int _medpackHealAmount;
 
     private int _moveSpeed = 40;
     private float max = 150;
@@ -47,13 +52,17 @@ public class Player : MonoBehaviour
     private bool _isEvacing;
     private float _currentEvacTime;
     private float _sessionTime;
+    private int _accelratorCount;
+    private int _medpackCount;
+    private bool _isAccelerated;
+    private float _accelratorTimer;
     [Space]
     [SerializeField] private float _maxWarningLevel;
     [Space]
     [SerializeField] private List<GameObject> _enemys;
     [SerializeField] private List<GameObject> _collectables;
     [Space]
-    public List<GameObject> _Backback;
+    public List<GameObject> _backpack;
     public int _backpackScore;
     public bool getIsDay()//获取白天黑夜状态
     {
@@ -77,6 +86,7 @@ public class Player : MonoBehaviour
             collectable.SetActive(false);
         }
         _cooldown = 30;
+        SetLifeBar(0f);
     }
     void Update()
     {
@@ -91,15 +101,26 @@ public class Player : MonoBehaviour
                 _moveSpeed -= 1;
             }
         }
+        if (_isAccelerated)
+        {
+            if (_moveSpeed > 40 + (int)_accelratorSpeed * 10) 
+            {
+                _moveSpeed = 40 + (int)_accelratorSpeed * 10;
+            }
+        }
+        else 
+        {
+            if (_moveSpeed > 40)
+            {
+                _moveSpeed = 40;
+            }
+        }
         if (_moveSpeed < 10)
         {
             _moveSpeed = 10;
         }
-        if (_moveSpeed > 40)
-        {
-            _moveSpeed = 40;
-        }
-        _speedText.text = "Max Speed: " + _moveSpeed / 10f ;
+
+        _speedText.text = "Max Speed: " + _moveSpeed / 10f;
         //玩家移动
         float x = Input.GetAxis("Horizontal");
         float y = Input.GetAxis("Vertical");
@@ -121,6 +142,11 @@ public class Player : MonoBehaviour
         _cooldown -= Time.deltaTime;
         _damageCooldown -= Time.deltaTime;
         _sessionTime -= Time.deltaTime;
+        _accelratorTimer -= Time.deltaTime;
+        if(_accelratorTimer <= 0 && _isAccelerated)
+        {
+            _isAccelerated = false;
+        }
         _timeText.text = "Time Left: " + _sessionTime.ToString("0.0") + "s";
         if (_isEvacing)
         {
@@ -203,12 +229,81 @@ public class Player : MonoBehaviour
             PlayerPrefs.SetInt("LifeLeft", life);
             PlayerPrefs.SetInt("SessionTime", (int)(_maxSessionTime - _sessionTime));
             int score = 0;
-            for (int i = 0; i < _Backback.Count; i++)
+            for (int i = 0; i < _backpack.Count; i++)
             {
-                score += _Backback[i].GetComponent<Collectable>().GetValue();
+                score += _backpack[i].GetComponent<Collectable>().GetValue();
             }
             PlayerPrefs.SetInt("Score", score);
         }
+        //背包物品计数
+        _medpackCount = 0;
+        _accelratorCount = 0;
+        foreach (var item in _backpack)
+        {
+            if(item.GetComponent<Collectable>().GetItemType() == ItemType.Med_Pack)
+            {
+                _medpackCount += 1;
+            }
+            else if (item.GetComponent<Collectable>().GetItemType() == ItemType.Accelerator)
+            {
+                _accelratorCount += 1;
+            }
+        }
+        _medpackText.text = "Medpacks: " + _medpackCount;
+        _accelratorText.text = "Accelerators: " + _accelratorCount;
+        if (Input.GetKeyDown(KeyCode.Alpha1))
+        {
+            if(_medpackCount > 0 && life < _maxlife)
+            {
+                life += _medpackHealAmount;
+                if (life > _maxlife)
+                {
+                    life = _maxlife;
+                }
+                _lifeText.text = "Life: " + life.ToString();
+                for (int i = 0; i < _backpack.Count; i++)
+                {
+                    if (_backpack[i].GetComponent<Collectable>().GetItemType() == ItemType.Med_Pack)
+                    {
+                        GameObject gameObject = _backpack[i];
+                        gameObject.GetComponent<Collectable>().DestoryUI();
+                        _backpack.RemoveAt(i);
+                        _collectables.Remove(gameObject);
+                        _reachSystem.GetComponent<PickupSystem>().RemoveFromBackpack(gameObject.GetComponent<Collectable>().GetWeight(), gameObject.GetComponent<Collectable>().GetValue());
+                        Destroy(gameObject);
+                        break;
+                    }
+                }
+                _medpackCount -= 1;
+            }
+        }
+        if (Input.GetKeyDown(KeyCode.Alpha2))
+        {
+            if(_accelratorCount > 0)
+            {
+                _moveSpeed = (int)(_speed +_accelratorSpeed) * 10;
+                for (int i = 0; i < _backpack.Count; i++)
+                {
+                    if (_backpack[i].GetComponent<Collectable>().GetItemType() == ItemType.Accelerator)
+                    {
+                        GameObject gameObject = _backpack[i];
+                        gameObject.GetComponent<Collectable>().DestoryUI();
+                        _backpack.RemoveAt(i);
+                        _collectables.Remove(gameObject);
+                        _reachSystem.GetComponent<PickupSystem>().RemoveFromBackpack(gameObject.GetComponent<Collectable>().GetWeight(), gameObject.GetComponent<Collectable>().GetValue());
+                        Destroy(gameObject);
+                        break;
+                    }
+                }
+                _accelratorCount -= 1;
+                _accelratorTimer = _accelratorDuration;
+                _isAccelerated = true;
+            }
+        }
+    }
+    public void RemoveFromBackpack(GameObject gameObject)
+    {
+        _backpack.Remove(gameObject);
     }
     private void OnTriggerEnter2D(Collider2D collision)
     {
@@ -333,6 +428,6 @@ public class Player : MonoBehaviour
     public void AddToBackpack(Collectable collectable)
     {
         GameObject item = collectable.gameObject;
-        _Backback.Add(item);
+        _backpack.Add(item);
     }
 }
