@@ -23,6 +23,7 @@ public class Player : MonoBehaviour
     [SerializeField] private TMP_Text _timeText;
     [SerializeField] private GameObject _soundSystem;
     [SerializeField] private GameObject _reachSystem;
+    [SerializeField] private GameObject _evacZone;
     [Space]
     [Header("数据")]
     public int _speed;
@@ -110,6 +111,7 @@ public class Player : MonoBehaviour
         magnitude = (float)System.Math.Sqrt(xspeed * xspeed + yspeed * yspeed);
         _soundSystem.transform.localScale = new Vector3(magnitude * _soundMultiplier, magnitude * _soundMultiplier, magnitude * _soundMultiplier);
         _rb.velocity = new Vector2(xspeed, yspeed);
+        if(!isDay) _warningLevel += magnitude * 0.5f *Time.deltaTime;
         //倒计时与状态更新
         _warningLevel -= Time.deltaTime;
         _cooldown -= Time.deltaTime;
@@ -165,7 +167,7 @@ public class Player : MonoBehaviour
         }
         if (isDay)
         {
-            SetColddownBarDay(_cooldown);
+            SetColddownBarNight(_cooldown);
             if (_cooldown <= 0)
             {
                 SwichtoNight();
@@ -251,6 +253,7 @@ public class Player : MonoBehaviour
             if(!collectable.GetComponent<Collectable>().IsPicked())
                 collectable.SetActive(true);
         }
+        _evacZone.SetActive(false);
     }
     void SwichtoDay()
     {
@@ -267,6 +270,7 @@ public class Player : MonoBehaviour
                 collectable.SetActive(false);
         }
         _cooldown = 30;
+        _evacZone.SetActive(true);
     }
     void SetLifeBar(float val)
     {
