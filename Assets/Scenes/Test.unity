@@ -3966,7 +3966,7 @@ GameObject:
   - component: {fileID: 220236960}
   m_Layer: 3
   m_Name: Interact
-  m_TagString: Untagged
+  m_TagString: PickupSystem
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -4088,6 +4088,9 @@ MonoBehaviour:
   _player: {fileID: 2058326389}
   _backpackPrefab: {fileID: 1072705886150108395, guid: b4b5585b5e58db34f9c0f7ae6880c70b, type: 3}
   _backpackUI: {fileID: 717421568}
+  _backpackSlotText: {fileID: 2026088036}
+  _backpackCapacityText: {fileID: 2133982070}
+  _backpackScoreText: {fileID: 1510203501}
   _collectableList: []
 --- !u!1 &251273073
 GameObject:
@@ -4795,7 +4798,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3438521345572916682, guid: 120bcf4c25c0d5a4f829ca51fe0f5a60, type: 3}
       propertyPath: _weight
-      value: 3
+      value: 5
       objectReference: {fileID: 0}
     - target: {fileID: 3438521345572916682, guid: 120bcf4c25c0d5a4f829ca51fe0f5a60, type: 3}
       propertyPath: _itemName
@@ -5070,7 +5073,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3438521345572916682, guid: 120bcf4c25c0d5a4f829ca51fe0f5a60, type: 3}
       propertyPath: _weight
-      value: 3
+      value: 5
       objectReference: {fileID: 0}
     - target: {fileID: 3438521345572916682, guid: 120bcf4c25c0d5a4f829ca51fe0f5a60, type: 3}
       propertyPath: _itemName
@@ -10712,7 +10715,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3438521345572916682, guid: 120bcf4c25c0d5a4f829ca51fe0f5a60, type: 3}
       propertyPath: _weight
-      value: 3
+      value: 5
       objectReference: {fileID: 0}
     - target: {fileID: 3438521345572916682, guid: 120bcf4c25c0d5a4f829ca51fe0f5a60, type: 3}
       propertyPath: _itemName
@@ -10856,7 +10859,7 @@ GameObject:
   - component: {fileID: 1913323811}
   m_Layer: 3
   m_Name: Sound effect
-  m_TagString: Untagged
+  m_TagString: SoundSystem
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -11033,7 +11036,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: 'Slot: 0/20'
+  m_text: 'Slots: 0/20'
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
@@ -11259,7 +11262,7 @@ GameObject:
   - component: {fileID: 2058326395}
   m_Layer: 3
   m_Name: Player
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -11369,6 +11372,7 @@ MonoBehaviour:
   _enemys: []
   _collectables: []
   _Backback: []
+  _backpackScore: 0
 --- !u!50 &2058326394
 Rigidbody2D:
   serializedVersion: 4

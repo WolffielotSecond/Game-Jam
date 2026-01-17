@@ -10,6 +10,8 @@ TagManager:
   - Collectable
   - RoomSwitcher
   - Evac
+  - SoundSystem
+  - PickupSystem
   layers:
   - Default
   - TransparentFX

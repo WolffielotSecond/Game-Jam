@@ -24,4 +24,12 @@ public class Failed : MonoBehaviour
             _reasonText.text = "Timeout";
         }
     }
+    public void Restart()
+    {
+        UnityEngine.SceneManagement.SceneManager.LoadScene("Test");
+    }
+    public void MainMenu()
+    {
+        UnityEngine.SceneManagement.SceneManager.LoadScene("Start");
+    }
 }

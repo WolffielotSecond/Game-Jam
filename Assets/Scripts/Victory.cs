@@ -18,4 +18,12 @@ public class Victory : MonoBehaviour
         _timeText.text = "Time Survived: " + times + "s";
         _lifeText.text = "Life Left: " + lifes;
     }
+    public void Restart()
+    {
+        UnityEngine.SceneManagement.SceneManager.LoadScene("Test");
+    }
+    public void MainMenu()
+    {
+        UnityEngine.SceneManagement.SceneManager.LoadScene("Start");
+    }
 }
