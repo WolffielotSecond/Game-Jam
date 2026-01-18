@@ -8,6 +8,34 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 2156768837611229415, guid: 120bcf4c25c0d5a4f829ca51fe0f5a60, type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: 21300000, guid: fb86eaa9ced0b7243ada066ad77c636b, type: 3}
+    - target: {fileID: 2156768837611229415, guid: 120bcf4c25c0d5a4f829ca51fe0f5a60, type: 3}
+      propertyPath: m_Color.b
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2156768837611229415, guid: 120bcf4c25c0d5a4f829ca51fe0f5a60, type: 3}
+      propertyPath: m_Color.g
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2156768837611229415, guid: 120bcf4c25c0d5a4f829ca51fe0f5a60, type: 3}
+      propertyPath: m_Color.r
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3438521345572916682, guid: 120bcf4c25c0d5a4f829ca51fe0f5a60, type: 3}
+      propertyPath: _value
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 3438521345572916682, guid: 120bcf4c25c0d5a4f829ca51fe0f5a60, type: 3}
+      propertyPath: _weight
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3438521345572916682, guid: 120bcf4c25c0d5a4f829ca51fe0f5a60, type: 3}
+      propertyPath: _itemName
+      value: Health Kit
+      objectReference: {fileID: 0}
     - target: {fileID: 4487267187233517097, guid: 120bcf4c25c0d5a4f829ca51fe0f5a60, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
@@ -48,9 +76,33 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 5113670674223819471, guid: 120bcf4c25c0d5a4f829ca51fe0f5a60, type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: 21300000, guid: fb86eaa9ced0b7243ada066ad77c636b, type: 3}
+    - target: {fileID: 5113670674223819471, guid: 120bcf4c25c0d5a4f829ca51fe0f5a60, type: 3}
+      propertyPath: m_Color.b
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5113670674223819471, guid: 120bcf4c25c0d5a4f829ca51fe0f5a60, type: 3}
+      propertyPath: m_Color.g
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5113670674223819471, guid: 120bcf4c25c0d5a4f829ca51fe0f5a60, type: 3}
+      propertyPath: m_Color.r
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7801676517692311978, guid: 120bcf4c25c0d5a4f829ca51fe0f5a60, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 8148111545836949056, guid: 120bcf4c25c0d5a4f829ca51fe0f5a60, type: 3}
       propertyPath: m_Name
-      value: Collectable
+      value: Health Kit
+      objectReference: {fileID: 0}
+    - target: {fileID: 8148111545836949056, guid: 120bcf4c25c0d5a4f829ca51fe0f5a60, type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

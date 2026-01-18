@@ -13159,6 +13159,10 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 604972575}
     - target: {fileID: 8900692233763761006, guid: 3e55c41ca976a51429df5d730b07c464, type: 3}
+      propertyPath: _evacTime
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 8900692233763761006, guid: 3e55c41ca976a51429df5d730b07c464, type: 3}
       propertyPath: _evacZone
       value: 
       objectReference: {fileID: 251273073}
