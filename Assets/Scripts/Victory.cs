@@ -14,7 +14,7 @@ public class Victory : MonoBehaviour
         int times = PlayerPrefs.GetInt("SessionTime", 0);
         int lifes = PlayerPrefs.GetInt("LifeLeft", 0);
         int score = PlayerPrefs.GetInt("Score", 0);
-        _scoreText.text = "Score: " + score;
+        _scoreText.text = score.ToString();
         _timeText.text = "Time Survived: " + times + "s";
         _lifeText.text = "Life Left: " + lifes;
     }
