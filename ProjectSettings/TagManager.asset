@@ -14,6 +14,8 @@ TagManager:
   - PickupSystem
   - Slower
   - WallTilemap
+  - DayBGM
+  - NightBGM
   layers:
   - Default
   - TransparentFX

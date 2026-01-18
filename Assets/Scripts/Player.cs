@@ -71,6 +71,8 @@ public class Player : MonoBehaviour
     private bool _isBackpackActive;
     private bool _started;
     private bool _batSoundplayed;
+    private AudioSource _dayBGM;
+    private AudioSource _nightBGM;
     [Space]
     [SerializeField] private float _maxWarningLevel;
     [Space]
@@ -85,6 +87,10 @@ public class Player : MonoBehaviour
     }
     void Start()
     {
+        _dayBGM = GameObject.Find("DayBGM").GetComponent<AudioSource>();
+        _nightBGM = GameObject.Find("NightBGM").GetComponent<AudioSource>();
+        _dayBGM.volume = 0.3f;
+        _nightBGM.volume = 0.0f;
         _sessionTime = _maxSessionTime;
         _reachSystem.transform.localScale = new Vector3(_reachRange, _reachRange, _reachRange);
         _moveSpeed = _speed * 10;
@@ -445,6 +451,8 @@ public class Player : MonoBehaviour
         _evacZone.SetActive(false);
         _timer.Stop();
         _timer.Play();
+        _nightBGM.volume = 0.3f;
+        _dayBGM.volume = 0.0f;
     }
     void SwichtoDay()
     {
@@ -467,6 +475,8 @@ public class Player : MonoBehaviour
         _evacZone.SetActive(true);
         _timer.Stop();
         _timer.Play();
+        _nightBGM.volume = 0.0f;
+        _dayBGM.volume = 0.3f;
     }
     void SetLifeBar(float val)
     {
