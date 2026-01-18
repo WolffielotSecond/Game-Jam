@@ -164,8 +164,8 @@ public class Player : MonoBehaviour
             yspeed = yspeed / magnitude * _moveSpeed / 10f;
         }
         magnitude = (float)System.Math.Sqrt(xspeed * xspeed + yspeed * yspeed);
-        Debug.Log(_walkSpeedUI.GetComponent<RectTransform>().position);
-        _walkSpeedUI.GetComponent<RectTransform>().position = new Vector3((_moveSpeed / (_speed * 10 + _accelratorSpeed * 10)) * 100 + 25f, 450, 0);
+        Debug.Log(_walkSpeedUI.GetComponent<RectTransform>().localPosition);
+        _walkSpeedUI.GetComponent<RectTransform>().localPosition = new Vector3(0 - (_moveSpeed / (_speed * 10 + _accelratorSpeed * 10)) * 100, 0, 0);
         if (magnitude < 0.1)
         {
             _animator.SetBool("IsUp", false);
