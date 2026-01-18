@@ -89,8 +89,8 @@ public class Player : MonoBehaviour
     {
         _dayBGM = GameObject.Find("DayBGM").GetComponent<AudioSource>();
         _nightBGM = GameObject.Find("NightBGM").GetComponent<AudioSource>();
-        //_dayBGM.volume = 0.3f;
-        //_nightBGM.volume = 0.0f;
+        _dayBGM.volume = 0.0f;
+        _nightBGM.volume = 0.0f;
         _sessionTime = _maxSessionTime;
         _reachSystem.transform.localScale = new Vector3(_reachRange, _reachRange, _reachRange);
         _moveSpeed = _speed * 10;
