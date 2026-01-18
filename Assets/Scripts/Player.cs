@@ -37,6 +37,7 @@ public class Player : MonoBehaviour
     [SerializeField] private AudioSource _walk;
     [SerializeField] private AudioSource _hurt;
     [SerializeField] private AudioSource _bat;
+    [SerializeField] private AudioSource _tele;
     [Space]
     [Header("数据")]
     public int _speed;
@@ -163,8 +164,8 @@ public class Player : MonoBehaviour
             yspeed = yspeed / magnitude * _moveSpeed / 10f;
         }
         magnitude = (float)System.Math.Sqrt(xspeed * xspeed + yspeed * yspeed);
-        Debug.Log(_moveSpeed / (_speed * 10 + _accelratorSpeed * 10));
-        _walkSpeedUI.GetComponent<RectTransform>().position = new Vector3((_moveSpeed / (_speed * 10 + _accelratorSpeed * 10)) * 200 + 45, 730, 0);
+        Debug.Log(_walkSpeedUI.GetComponent<RectTransform>().position);
+        _walkSpeedUI.GetComponent<RectTransform>().position = new Vector3((_moveSpeed / (_speed * 10 + _accelratorSpeed * 10)) * 100 + 25f, 450, 0);
         if (magnitude < 0.1)
         {
             _animator.SetBool("IsUp", false);
@@ -208,7 +209,7 @@ public class Player : MonoBehaviour
                 _animator.SetBool("IsRight", false);
             }
         }
-            _soundSystem.transform.localScale = new Vector3(magnitude * _soundMultiplier, magnitude * _soundMultiplier, magnitude * _soundMultiplier);
+        _soundSystem.transform.localScale = new Vector3(magnitude * _soundMultiplier, magnitude * _soundMultiplier, magnitude * _soundMultiplier);
         _rb.velocity = new Vector2(xspeed, yspeed);
         if(!isDay) _warningLevel += magnitude * 0.5f *Time.deltaTime;
         //倒计时与状态更新
@@ -453,6 +454,7 @@ public class Player : MonoBehaviour
         _timer.Play();
         //_nightBGM.volume = 0.3f;
         //_dayBGM.volume = 0.0f;
+        _tele.Play();
     }
     void SwichtoDay()
     {
@@ -477,6 +479,7 @@ public class Player : MonoBehaviour
         _timer.Play();
         //_nightBGM.volume = 0.0f;
         //_dayBGM.volume = 0.3f;
+        _tele.Play();
     }
     void SetLifeBar(float val)
     {

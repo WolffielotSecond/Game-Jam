@@ -26,7 +26,6 @@ public class PostProcessing : MonoBehaviour
     private void Update()
     {
 
-        Debug.Log(_depthOfField.focusDistance.value);
 
         if (_player.GetComponent<Player>()._cooldown <= 15)
         {
