@@ -30,6 +30,8 @@ public class Player : MonoBehaviour
     [SerializeField] private Animator _animator;
     [SerializeField] private SpriteRenderer _eyeUI;
     [SerializeField] private List<Sprite> _eyeSprites;
+    [SerializeField] private GameObject _timerUI;
+    [SerializeField] private GameObject _walkSpeedUI;
     [Space]
     [Header("Êý¾Ý")]
     public int _speed;
@@ -147,6 +149,8 @@ public class Player : MonoBehaviour
             yspeed = yspeed / magnitude * _moveSpeed / 10f;
         }
         magnitude = (float)System.Math.Sqrt(xspeed * xspeed + yspeed * yspeed);
+        Debug.Log(_moveSpeed / (_speed * 10 + _accelratorSpeed * 10));
+        _walkSpeedUI.GetComponent<RectTransform>().position = new Vector3((_moveSpeed / (_speed * 10 + _accelratorSpeed * 10)) * 200 + 45, 730, 0);
         if (magnitude < 0.1)
         {
             _animator.SetBool("IsUp", false);
@@ -465,32 +469,33 @@ public class Player : MonoBehaviour
     }
     void SetColddownBarNight(float time)
     {
-        if (time >= 15)
-        {
-            Vector2 cur = _colddownBar.sizeDelta;
-            cur.y = System.Math.Abs(time - 15) / 15 * max;
-            _colddownBar.sizeDelta = cur;
-            cur = _warningBar.sizeDelta;
-            cur.y = 0;
-            _warningBar.sizeDelta = cur;
-        }
-        else if(time <= 0)
-        {
-            Vector2 cur = _colddownBar.sizeDelta;
-            cur.y = 0;
-            _colddownBar.sizeDelta = cur;
-            cur = _warningBar.sizeDelta;
-            cur.y = 0;
-            _warningBar.sizeDelta = cur;
-        }
-        else { 
-            Vector2 cur = _colddownBar.sizeDelta;
-            cur.y = 0;
-            _colddownBar.sizeDelta = cur;
-            cur = _warningBar.sizeDelta;
-            cur.y = System.Math.Abs(time - 15) / 15 * max;
-            _warningBar.sizeDelta = cur;
-        }
+        _timerUI.GetComponent<RectTransform>().rotation = Quaternion.Euler(0, 0, (time / 30f) * 360f + 90);
+        /* if (time >= 15)
+         {
+             Vector2 cur = _colddownBar.sizeDelta;
+             cur.y = System.Math.Abs(time - 15) / 15 * max;
+             _colddownBar.sizeDelta = cur;
+             cur = _warningBar.sizeDelta;
+             cur.y = 0;
+             _warningBar.sizeDelta = cur;
+         }
+         else if(time <= 0)
+         {
+             Vector2 cur = _colddownBar.sizeDelta;
+             cur.y = 0;
+             _colddownBar.sizeDelta = cur;
+             cur = _warningBar.sizeDelta;
+             cur.y = 0;
+             _warningBar.sizeDelta = cur;
+         }
+         else { 
+             Vector2 cur = _colddownBar.sizeDelta;
+             cur.y = 0;
+             _colddownBar.sizeDelta = cur;
+             cur = _warningBar.sizeDelta;
+             cur.y = System.Math.Abs(time - 15) / 15 * max;
+             _warningBar.sizeDelta = cur;
+         }*/
     }
     public void AddToBackpack(Collectable collectable)
     {
