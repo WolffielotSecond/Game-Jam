@@ -32,6 +32,11 @@ public class Player : MonoBehaviour
     [SerializeField] private List<Sprite> _eyeSprites;
     [SerializeField] private GameObject _timerUI;
     [SerializeField] private GameObject _walkSpeedUI;
+    [SerializeField] private AudioSource _timer;
+    [SerializeField] private AudioSource _BG;
+    [SerializeField] private AudioSource _walk;
+    [SerializeField] private AudioSource _hurt;
+    [SerializeField] private AudioSource _bat;
     [Space]
     [Header("数据")]
     public int _speed;
@@ -65,6 +70,7 @@ public class Player : MonoBehaviour
     private float _accelratorTimer;
     private bool _isBackpackActive;
     private bool _started;
+    private bool _batSoundplayed;
     [Space]
     [SerializeField] private float _maxWarningLevel;
     [Space]
@@ -92,6 +98,8 @@ public class Player : MonoBehaviour
 
         _cooldown = 30;
         SetLifeBar(0f);
+        _timer.Play();
+        _BG.Play();
     }
     void Update()
     {
@@ -157,9 +165,11 @@ public class Player : MonoBehaviour
             _animator.SetBool("IsDown", false);
             _animator.SetBool("IsLeft", false);
             _animator.SetBool("IsRight", false);
+            _walk.Pause();
         }
         else if(System.Math.Abs(xspeed)< System.Math.Abs(yspeed))
         {
+            _walk.UnPause();
             if (yspeed > 0) 
             {
                 _animator.SetBool("IsUp", true);
@@ -238,11 +248,12 @@ public class Player : MonoBehaviour
         }
         if (_warningLevel >= _chaseValue)
         {
-            if (_chasePositionSeted == false)
+            if(!_batSoundplayed)
             {
-                _chasePositionSeted = true;
-                _chasePosition = transform.position;
+                _batSoundplayed = true;
+                _bat.Play();
             }
+                _chasePosition = transform.position;
             foreach (var enemy in _enemys)
             {
                 enemy.GetComponent<Enemy>().ChasePlayer(_chasePosition);
@@ -254,9 +265,9 @@ public class Player : MonoBehaviour
         {
             SetLifeBar(_warningLevel / _maxWarningLevel);
         }
-        if (_warningLevel < _maxWarningLevel)
+        if (_warningLevel < _chaseValue)
         {
-            _chasePositionSeted = false;
+            _batSoundplayed = false;
         }
         if (isDay)
         {
@@ -384,6 +395,7 @@ public class Player : MonoBehaviour
         }
         if (collision.gameObject.CompareTag("Enemy") && _damageCooldown<=0)
         {
+            _hurt.Play();
             life -= 1;
             _lifeText.text = "Life: " + life.ToString();
             collision.gameObject.GetComponent<Enemy>().StopChasing();
@@ -431,6 +443,8 @@ public class Player : MonoBehaviour
                 collectable.SetActive(false);//晚上掉落的消失，白天的显示
         }
         _evacZone.SetActive(false);
+        _timer.Stop();
+        _timer.Play();
     }
     void SwichtoDay()
     {
@@ -451,6 +465,8 @@ public class Player : MonoBehaviour
         }
         _cooldown = 30;
         _evacZone.SetActive(true);
+        _timer.Stop();
+        _timer.Play();
     }
     void SetLifeBar(float val)
     {
