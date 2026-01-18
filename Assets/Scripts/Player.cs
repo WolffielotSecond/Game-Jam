@@ -47,7 +47,7 @@ public class Player : MonoBehaviour
     private bool isDay = true;
     private float _warningLevel;
     private float _cooldown;
-    private int life = 7;
+    public int life = 7;
     private float _damageCooldown;
     private bool _chasePositionSeted;
     private Vector3 _chasePosition;
