@@ -51,12 +51,12 @@ public class Player : MonoBehaviour
     public float _accelratorSpeed;
     public int _medpackHealAmount;
     public float _chaseValue;
-
+    [Header("²»Ðí¸Ä")]
     private int _moveSpeed = 40;
     private float max = 150;
     private bool isDay = true;
     private float _warningLevel;
-    private float _cooldown;
+    public float _cooldown;
     public int life = 7;
     private float _damageCooldown;
     private bool _chasePositionSeted;
