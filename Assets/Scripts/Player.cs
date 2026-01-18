@@ -28,6 +28,8 @@ public class Player : MonoBehaviour
     [SerializeField] private GameObject _reachSystem;
     [SerializeField] private GameObject _evacZone;
     [SerializeField] private Animator _animator;
+    [SerializeField] private SpriteRenderer _eyeUI;
+    [SerializeField] private List<Sprite> _eyeSprites;
     [Space]
     [Header("数据")]
     public int _speed;
@@ -41,6 +43,7 @@ public class Player : MonoBehaviour
     public float _accelratorDuration;
     public float _accelratorSpeed;
     public int _medpackHealAmount;
+    public float _chaseValue;
 
     private int _moveSpeed = 40;
     private float max = 150;
@@ -99,7 +102,7 @@ public class Player : MonoBehaviour
             }
             _started = true;
         }
-
+        UpdateEyeUI();
         //玩家移动速度调节
         float judge = Input.GetAxis("Mouse ScrollWheel");
         {     if (judge > 0f)
@@ -225,11 +228,11 @@ public class Player : MonoBehaviour
         {
             _warningLevel = 0;
         }
-        else if(_warningLevel>= _maxWarningLevel + 1)
+        else if(_warningLevel>= _maxWarningLevel)
         {
-            _warningLevel = _maxWarningLevel + 1;
+            _warningLevel = _maxWarningLevel;
         }
-        else if (_warningLevel >= _maxWarningLevel)
+        if (_warningLevel >= _chaseValue)
         {
             if (_chasePositionSeted == false)
             {
@@ -497,5 +500,32 @@ public class Player : MonoBehaviour
     public void PlayPickUpAnim()
     {
         _animator.SetTrigger("Pick");
+    }
+    public void UpdateEyeUI()
+    {
+        if(_warningLevel< 2f) 
+        { 
+            _eyeUI.sprite = _eyeSprites[0]; 
+        }
+        else if(_warningLevel >= 2f && _warningLevel < 4f)
+        {
+            _eyeUI.sprite = _eyeSprites[1];
+        }
+        else if (_warningLevel >= 4f && _warningLevel < 6f)
+        {
+            _eyeUI.sprite = _eyeSprites[2];
+        }
+        else if (_warningLevel >= 6f && _warningLevel < 8f)
+        {
+            _eyeUI.sprite = _eyeSprites[3];
+        }
+        else if (_warningLevel >= 8f && _warningLevel < 10f)
+        {
+            _eyeUI.sprite = _eyeSprites[4];
+        }
+        else if (_warningLevel >= 10f)
+        {
+            _eyeUI.sprite = _eyeSprites[5];
+        }
     }
 }
