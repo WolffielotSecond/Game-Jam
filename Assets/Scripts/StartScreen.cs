@@ -6,7 +6,7 @@ public class StartScreen : MonoBehaviour
 	private bool _isCreditsVisible = false;
     public void StartGame()
 	{
-		UnityEngine.SceneManagement.SceneManager.LoadScene("Test");
+		UnityEngine.SceneManagement.SceneManager.LoadScene("Story");
     }
 	public void QuitGame()
 	{
